@@ -1,0 +1,58 @@
+<template>
+  <button :class="btnColor">
+    <slot></slot>
+    <img
+      v-if="cartIcon"
+      src="data:image/png;base64,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"
+      alt="Cart Icon"
+    />
+  </button>
+</template>
+
+<script>
+export default {
+  props: ["btnColor", "cartIcon"]
+};
+</script>
+
+<style scoped>
+.btn {
+  border: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 3px;
+  color: #fff;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+}
+
+.btn-small {
+  padding: 0.5em 2em;
+}
+
+.btn-medium {
+  padding: 0.7em 4.5em;
+}
+
+.btn-large {
+  padding: 0.7em 5em;
+}
+
+.btn-info {
+  background-color: #2d9cdb;
+}
+
+.btn-sucess {
+  background-color: #27ae60;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+}
+
+.btn img {
+  max-width: 20px;
+  margin-left: 0.5em;
+}
+</style>
