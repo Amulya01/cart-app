@@ -19,13 +19,60 @@
       <router-link to="./">Back to list of products</router-link>
     </div>
     <h3 class="total" v-if="hasProduct()">Total: R$ {{ totalPrice() }}, 00</h3>
+    <div v-show="true" class="text-xs-center">
+      <v-dialog v-model="dialog" width="500">
+        <v-btn slot="activator" color="red lighten-2" dark>
+          Save and Continue
+        </v-btn>
+        <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>
+            Payment Via Cash on delivery
+          </v-card-title>
+
+          <v-card-text> Purchase Successful </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" flat @click="dialog = false;">
+              Thanks for shopping!
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+    <div v-show="false" class="text-xs-center">
+      <v-dialog v-model="dialog" width="500">
+        <v-btn slot="activator" color="red lighten-2" dark>
+          Save and Continue
+        </v-btn>
+        <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>
+            Login Issue
+          </v-card-title>
+
+          <v-card-text> Sign In Error! </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" flat @click="dialog = false;">
+              cancel
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-
+import signuperror from "./Modal.vue";
 export default {
+  components: [signuperror],
   computed: {
     ...mapGetters(["getProductsInCart"])
   },

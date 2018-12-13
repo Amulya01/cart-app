@@ -1,10 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import firebase from "firebase";
+import router from "./router";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: null,
+    error: null,
+    loading: false,
     notebooks: [
       {
         name: "Notebook Lenovo Ideapad 320 Intel® Core i5-7200u 8GB",
@@ -138,6 +142,9 @@ export default new Vuex.Store({
   },
 
   getters: {
+    isAuthenticated(state) {
+      return state.user !== null && state.user !== undefined;
+    },
     getNotebooks: state => state.notebooks,
     getSmartphones: state => state.smartphones,
     getAllProducts: state => state.notebooks.concat(state.smartphones),
@@ -148,6 +155,15 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    setUser(state, payload) {
+      state.user = payload;
+    },
+    setError(state, payload) {
+      state.error = payload;
+    },
+    setLoading(state, payload) {
+      state.loading = payload;
+    },
     ADD_PRODUCT: (state, product) => {
       state.cartProducts.push(product);
     },
@@ -166,6 +182,46 @@ export default new Vuex.Store({
   },
 
   actions: {
+    userSignUp({ commit }, payload) {
+      commit("setLoading", true);
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(payload.email, payload.password)
+        .then(firebaseUser => {
+          commit("setUser", { email: firebaseUser.user.email });
+          commit("setLoading", false);
+          router.push(" ");
+          commit("setError", null);
+        })
+        .catch(error => {
+          commit("setError", error.message);
+          commit("setLoading", false);
+        });
+    },
+    userSignIn({ commit }, payload) {
+      commit("setLoading", true);
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(payload.email, payload.password)
+        .then(firebaseUser => {
+          commit("setUser", { email: firebaseUser.user.email });
+          commit("setLoading", false);
+          commit("setError", null);
+          router.push(" ");
+        })
+        .catch(error => {
+          commit("setError", error.message);
+          commit("setLoading", false);
+        });
+    },
+    autoSignIn({ commit }, payload) {
+      commit("setUser", { email: payload.email });
+    },
+    userSignOut({ commit }) {
+      firebase.auth().signOut();
+      commit("setUser", null);
+      router.push("/");
+    },
     addProduct: (context, product) => {
       context.commit("ADD_PRODUCT", product);
     },

@@ -5,10 +5,13 @@ import AllSmartphones from "../components/AllSmartphones";
 import AllNotebooks from "../components/AllNotebooks";
 import Product from "../components/Product";
 import CartCheckout from "../components/CartCheckout";
+import login from "../components/login.vue";
+import signup from "../components/signup.vue";
 
 Vue.use(Router);
 
 export default new Router({
+  mode: "history",
   routes: [
     {
       path: "",
@@ -34,6 +37,26 @@ export default new Router({
       path: "/checkout",
       name: "Checkout",
       component: CartCheckout
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: login
+    },
+    {
+      path: "/signup",
+      name: "signup",
+      component: signup
     }
   ]
+});
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const isAuthenticated = firebase.auth().currentUser;
+  if (requiresAuth && !isAuthenticated) {
+    //console.log("not authenticated");
+    next("/login");
+  } else {
+    next();
+  }
 });
