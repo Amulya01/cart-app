@@ -14,6 +14,10 @@
       <transition name="appear">
         <popupcart class="cart" v-if="getPopupCart" />
       </transition>
+      <v-spacer></v-spacer>
+
+      <v-btn to="/login" class="info">Login</v-btn>
+      <v-btn to="/signup" class="info">Register</v-btn>
     </mainMenu>
     <transition name="leave"> <router-view></router-view> </transition>
     <maskBg v-if="getPopupCart" @click.native="showPopupCart();" />

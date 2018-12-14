@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase";
+import db from "./fb";
 import router from "./router";
 Vue.use(Vuex);
 
@@ -190,7 +191,7 @@ export default new Vuex.Store({
         .then(firebaseUser => {
           commit("setUser", { email: firebaseUser.user.email });
           commit("setLoading", false);
-          router.push(" ");
+          router.push("");
           commit("setError", null);
         })
         .catch(error => {
@@ -207,7 +208,7 @@ export default new Vuex.Store({
           commit("setUser", { email: firebaseUser.user.email });
           commit("setLoading", false);
           commit("setError", null);
-          router.push(" ");
+          router.push("");
         })
         .catch(error => {
           commit("setError", error.message);

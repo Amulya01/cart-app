@@ -10,11 +10,11 @@ var config = {
   storageBucket: "dashboard-335aa.appspot.com",
   messagingSenderId: "947817800295"
 };
-//firebase.initializeApp(config);
-//const db = firebase.firestore();
-//db.settings({ timestampsInSnapshots: true });
+// firebase.initializeApp(config);
+// const db = firebase.firestore();
+// db.settings({ timestampsInSnapshots: true });
 
-//export default db;
+// export default db;
 export default (!firebase.apps.length
   ? firebase.initializeApp(config).firestore()
   : firebase.app().firestore());
