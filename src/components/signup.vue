@@ -100,6 +100,7 @@ export default {
         email: this.email,
         password: this.password
       });
+      console.log("signup");
     },
     clear() {
       this.$refs.form.reset();

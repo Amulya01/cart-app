@@ -72,7 +72,10 @@
 import { mapGetters, mapActions } from "vuex";
 import signuperror from "./Modal.vue";
 export default {
-  components: [signuperror],
+  data() {
+    dialogue: "";
+  },
+  components: { signuperror },
   computed: {
     ...mapGetters(["getProductsInCart"])
   },

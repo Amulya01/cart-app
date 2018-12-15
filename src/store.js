@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase";
-import db from "./fb";
+// import db from "./fb";
 import router from "./router";
 Vue.use(Vuex);
 
@@ -191,8 +191,9 @@ export default new Vuex.Store({
         .then(firebaseUser => {
           commit("setUser", { email: firebaseUser.user.email });
           commit("setLoading", false);
-          router.push("");
+          router.push("/");
           commit("setError", null);
+          console.log("logged in");
         })
         .catch(error => {
           commit("setError", error.message);
@@ -208,7 +209,7 @@ export default new Vuex.Store({
           commit("setUser", { email: firebaseUser.user.email });
           commit("setLoading", false);
           commit("setError", null);
-          router.push("");
+          router.push("/");
         })
         .catch(error => {
           commit("setError", error.message);
@@ -221,7 +222,9 @@ export default new Vuex.Store({
     userSignOut({ commit }) {
       firebase.auth().signOut();
       commit("setUser", null);
-      router.push("/");
+      router.push("/notebooks");
+      console.log("logged out");
+      console.log(this.state.user);
     },
     addProduct: (context, product) => {
       context.commit("ADD_PRODUCT", product);

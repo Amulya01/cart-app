@@ -14,7 +14,7 @@ export default new Router({
   mode: "history",
   routes: [
     {
-      path: "",
+      path: "/",
       name: "All Products",
       component: AllProducts
     },

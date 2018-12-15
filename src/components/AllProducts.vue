@@ -12,6 +12,9 @@ export default {
   },
   computed: {
     ...mapGetters(["getAllProducts"])
+  },
+  created() {
+    console.log(this.$store.getters.isAuthenticated);
   }
 };
 </script>

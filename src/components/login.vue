@@ -82,6 +82,7 @@ export default {
         email: this.email,
         password: this.password
       });
+      console.log(this.$store.getters.isAuthenticated);
     },
     clear() {
       this.$refs.form.reset();

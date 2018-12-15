@@ -16,8 +16,13 @@
       </transition>
       <v-spacer></v-spacer>
 
-      <v-btn to="/login" class="info">Login</v-btn>
-      <v-btn to="/signup" class="info">Register</v-btn>
+      <v-btn v-show="!isAuthenticated" to="/login" class="info">Login</v-btn>
+      <v-btn v-show="!isAuthenticated" to="/signup" class="info"
+        >Register</v-btn
+      >
+      <v-btn v-show="isAuthenticated" @click="userSignOut" class="info"
+        >SignOut</v-btn
+      >
     </mainMenu>
     <transition name="leave"> <router-view></router-view> </transition>
     <maskBg v-if="getPopupCart" @click.native="showPopupCart();" />
@@ -45,10 +50,19 @@ export default {
     },
     showPopupCart() {
       this.showOrHiddenPopupCart();
+    },
+
+    userSignOut() {
+      this.$store.dispatch("userSignOut");
+      if (this.$store.state.user) console.log(true);
     }
   },
   computed: {
-    ...mapGetters(["getProductsInCart", "getPopupCart"])
+    ...mapGetters(["getProductsInCart", "getPopupCart"]),
+    isAuthenticated() {
+      console.log(this.$store.getters.isAuthenticated);
+      return this.$store.getters.isAuthenticated;
+    }
   }
 };
 </script>
